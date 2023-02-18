@@ -6,10 +6,10 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model User {
   id              Int     @id @default(autoincrement())
-  name            String
+  firstName       String
+  lastname        String
   email           String  @unique
   password        String
   deliveryAddress String
@@ -78,4 +78,9 @@ model CookingClass {
   price       Float
   image       String
   date        DateTime
+}
+
+enum Role {
+  USER
+  ADMIN
 }
