@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response, Router } from "express";
-import { deleteProduct, getProducts, postProduct, putProduct } from "../handlers/Product";
+import { deleteProduct, getProducts, postProduct, putProduct } from "../handlers/product";
 import { enrichUser } from "../modules/auth";
 
 const app = Router()
