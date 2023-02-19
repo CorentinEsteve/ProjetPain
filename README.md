@@ -10,19 +10,21 @@
 Example of request body for creating a user:
 
 `{
-    "username": "John",
-    "password": "CrazyPotatoJohn"
+    "username" : "TheMagicDragon",
+    "password" : "azerty123",
+    "firstName" : "François",
+    "lastName" : "Pierrenoux",
+    "email" : "email.address@email.com"
 }`
 
-### Post Routes
-- `GET /api/posts`: Get all blog posts
-- `GET /api/posts/:date`: Get all blog posts created after a specific date
-- `POST /api/posts`: Create a new blog post
-- `DELETE /api/posts/:uuid`: Delete an existing blog post
-- `GET /api/posts/:id`: Retrieve a specific post
-- `PUT /api/posts/:id`: Update a specific post (only allowed for the author of the post)
-- `DELETE /api/posts/:id`: Delete a specific post (only allowed for the author of the post or users with the admin role)
-- `GET /api/posts?from=1674560065`: Retrieve a list of all posts sorted by date, starting from the timestamp provided in the from query parameter
+### Product Routes
+- `GET /api/products`: Get all products
+- `GET /api/products/:date`: Get all products created after a specific date
+- `POST /api/products`: Create a new product
+- `DELETE /api/products/:uuid`: Delete an existing product
+- `GET /api/products/:id`: Retrieve a specific product
+- `PUT /api/products/:id`: Update a specific product
+- `DELETE /api/products/:id`: Delete a specific post
 
 Example of request body for creating a post (user needs to be logged in):
 

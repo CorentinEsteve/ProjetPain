@@ -4,12 +4,12 @@ import { enrichUser } from "../modules/auth";
 
 const app = Router()
 
-app.get('/Products', getProducts)
+app.get('/products', getProducts)
 
-app.post('/Products', postProduct)
+app.post('/products', postProduct)
 
-app.delete('/Products/:uuid',enrichUser, deleteProduct)
+app.delete('/products/:uuid',enrichUser, deleteProduct)
 
-app.put('/Products/:uuid', putProduct)
+app.put('/products/:uuid', putProduct)
 
 export default app
