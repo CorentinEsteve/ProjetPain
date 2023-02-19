@@ -46,7 +46,7 @@ export const protect: RequestHandler = (req, res, next) => {
 export const  enrichUser: RequestHandler = async (req, res, next) => {
     const id = req.user?.id;
     if(!id){
-        return res.status(400).json({ message: 'Invalid body sprovided.' });
+        return res.status(400).json({ message: 'Invalid body provided.' });
     }
     const user = await db.user.findUnique({ where: { id }});
     if(!user){
