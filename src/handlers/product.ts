@@ -6,7 +6,9 @@ import { comparePassword } from '../modules/auth';
 export const getProducts: RequestHandler = async (req, res) => {
     const products = await db.product.findMany({
         include: {
-            // comments: true,
+            Order: true,
+            Menu: true,
+            SpecialDiet: true,
         },
     })
     res.status(200).json({ products })
@@ -68,6 +70,7 @@ export const putProduct: RequestHandler = async (req, res) => {
                 }
             })
             res.status(200).json({ product })
+            console.log(product)
         }
         catch(err){
             res.status(400).json({ message:"error update product" })

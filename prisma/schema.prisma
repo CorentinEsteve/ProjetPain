@@ -55,11 +55,11 @@ model Customization {
 }
 
 model Menu {
-  id           String    @id @default(uuid())
-  category     String
-  products     Product[]
-  images       String[]
-  descriptions String[]
+  id          String    @id @default(uuid())
+  category    String
+  products    Product[]
+  images      String[]
+  description String[]
 }
 
 model SpecialDiet {
