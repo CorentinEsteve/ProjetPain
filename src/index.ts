@@ -4,16 +4,20 @@ import { protect } from './modules/auth'
 import productRoutes from './routes/product'
 import { createNewUser, deleteUser, signIn } from './handlers/user'
 import userRoutes from './routes/user'
+import cors from 'cors';
 dotenv.config()
 
-
 const app = express()
-const port = 3000
+const port = 3001
 
 app.use(express.json()) 
 app.get('/', (req, res) => {
     res.status(200).json({ message: 'Hello World!' });
 })
+
+app.use(cors({
+    origin: `http://localhost:3000`,
+}));
 
 app.use('/api', protect, [productRoutes, userRoutes])
 app.post('/signUp', createNewUser)
