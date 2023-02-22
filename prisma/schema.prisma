@@ -10,10 +10,10 @@ datasource db {
 model User {
   id              String  @id @unique @default(uuid())
   username        String  @unique @db.VarChar(64)
-  firstName       String
-  lastName        String
+  firstName       String?
+  lastName        String?
   email           String  @unique
-  password        String
+  password        String  @default("1234")
   deliveryAddress String?
   orderHistory    Order[]
   loyaltyPoints   Int?    @default(0)
@@ -42,7 +42,7 @@ model Order {
   products        Product[]
   orderDate       DateTime       @default(now())
   deliveryDate    DateTime
-  status          String
+  status          String         @default("pending")
   Customization   Customization? @relation(fields: [customizationId], references: [id])
   customizationId String?
 }

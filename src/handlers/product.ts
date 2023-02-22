@@ -36,17 +36,12 @@ export const postProduct: RequestHandler = async (req, res) => {
 
 export const deleteProduct: RequestHandler = async (req, res) => {
     try{
-        if (req.user.role == "ADMIN") {
-            const product = await db.product.delete({
-                where: {
-                    id: req.params.uuid,
-                }
-            })
-            res.status(200).json({ message: "product deleted", product })
-        }
-        else {
-            return res.status(403).json({ message: "You are not allowed to delete this product" });
-        }
+        const product = await db.product.delete({
+            where: {
+                id: req.params.uuid,
+            }
+        })
+        res.status(200).json({ message: "product deleted", product })
     }
     catch(err){
         console.log(err)
@@ -55,29 +50,23 @@ export const deleteProduct: RequestHandler = async (req, res) => {
 }
 
 export const putProduct: RequestHandler = async (req, res) => {
-    if (req.user.role == "ADMIN") {
-        try{
-            const product = await db.product.update({
-                where: {
-                    id: req.params.uuid,
-                },
-                data: {
-                    name : req.body.name,
-                    image : req.body.image,
-                    category : req.body.category,
-                    description: req.body.description,
-                    price: req.body.price,
-                }
-            })
-            res.status(200).json({ product })
-            console.log(product)
-        }
-        catch(err){
-            res.status(400).json({ message:"error update product" })
-        }
+    try{
+        const product = await db.product.update({
+            where: {
+                id: req.params.uuid,
+            },
+            data: {
+                name : req.body.name,
+                image : req.body.image,
+                category : req.body.category,
+                description: req.body.description,
+                price: req.body.price,
+            }
+        })
+        res.status(200).json({ product })
+        console.log(product)
     }
-    else{
-        console.log(req.user.role)
-        res.status(401).json({ message: "You are not allowed to update this product" });
+    catch(err){
+        res.status(400).json({ message:"error update product" })
     }
 }

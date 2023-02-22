@@ -1,6 +1,6 @@
 import express from 'express'
 import { deleteUser } from '../handlers/user'
-import	{enrichUser} from '../modules/auth'
+import	{ enrichUser } from '../modules/auth'
 
 const app = express.Router()
 

@@ -2,6 +2,7 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 import { protect } from './modules/auth'
 import productRoutes from './routes/product'
+import orderRoutes from './routes/order'
 import { createNewUser, deleteUser, signIn } from './handlers/user'
 import userRoutes from './routes/user'
 import cors from 'cors';
@@ -19,7 +20,7 @@ app.use(cors({
     origin: `http://localhost:3000`,
 }));
 
-app.use('/api', protect, [productRoutes, userRoutes])
+app.use('/api', protect, [productRoutes, orderRoutes, userRoutes])
 app.post('/signUp', createNewUser)
 app.post('/signIn', signIn)
 app.post('/deleteUser', protect, deleteUser)
