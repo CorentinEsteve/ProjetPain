@@ -45,24 +45,47 @@ export const postOrders: RequestHandler = async (req, res) => {
 
 export const putOrders: RequestHandler = async (req, res) => {
     try {
-        validationResult(req).throw()
-        const order = await db.order.update({
-            where: {
-                id: req.params.uuid,
-            },
-            data: {
-                products: req.body.products,
-                deliveryDate: req.body.deliveryDate,
-                status: req.body.status,
-            }
-        })
-        res.status(201).json({ message: "Order updated", order })
+        validationResult(req).throw();
+        const { products, status } = req.body;
+        const orderId = req.params.uuid;
+
+        // Update the order status
+        const updatedOrder = await db.order.update({
+            where: { id: orderId },
+            data: { status },
+        });
+
+        // Update the order products
+        if (products) {
+            const { addProducts = [], removeProducts = [] } = products;
+            const updatedProducts = await Promise.all(
+                addProducts.map(async (product: { id: any; }) => {
+                    return await db.product.update({
+                        where: { id: product.id },
+                        data: { orderId },
+                    });
+                })
+            );
+            const removedProducts = await Promise.all(
+                removeProducts.map(async (product: { id: any; }) => {
+                    return await db.product.update({
+                        where: { id: product.id },
+                        data: { orderId: null },
+                    });
+                })
+            );
+            res.status(200).json({
+                message: "Order updated",
+                order: { ...updatedOrder, products: [...updatedProducts, ...removedProducts] },
+            });
+        } else {
+            res.status(200).json({ message: "Order updated", order: updatedOrder });
+        }
+    } catch (err) {
+        console.log("error: " + err);
+        res.status(400).json({ message: "error updating order" });
     }
-    catch (err) {
-        console.log("error: " + err)
-        res.status(400).json({ message: "error updating order" })
-    }
-}
+};
 
 export const deleteOrders: RequestHandler = async (req, res) => {
     try {
