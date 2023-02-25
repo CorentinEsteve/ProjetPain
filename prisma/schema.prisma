@@ -21,30 +21,42 @@ model User {
 }
 
 model Product {
-  id            String       @id @default(uuid())
+  id            String         @id @default(uuid())
   name          String
   description   String
   price         Float
   image         String
   category      String
-  Order         Order?       @relation(fields: [orderId], references: [id])
+  Order         Order?         @relation(fields: [orderId], references: [id])
   orderId       String?
-  Menu          Menu?        @relation(fields: [menuId], references: [id])
+  Menu          Menu?          @relation(fields: [menuId], references: [id])
   menuId        String?
-  SpecialDiet   SpecialDiet? @relation(fields: [specialDietId], references: [id])
+  SpecialDiet   SpecialDiet?   @relation(fields: [specialDietId], references: [id])
   specialDietId String?
+  quantity      Int            @default(1)
+  ProductOrder  ProductOrder[]
 }
 
 model Order {
   id              String         @id @default(uuid())
   user            User           @relation(fields: [userId], references: [id])
   userId          String
-  products        Product[]
+  products        ProductOrder[]
   orderDate       DateTime       @default(now())
   deliveryDate    DateTime
   status          String         @default("pending")
   Customization   Customization? @relation(fields: [customizationId], references: [id])
   customizationId String?
+  Product         Product[]
+}
+
+model ProductOrder {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  quantity  Int     @default(1)
 }
 
 model Customization {
